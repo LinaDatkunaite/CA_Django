@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # MY APSS
+
+    # MY APSS - butina prideti
     'library',
     # THIRD PARTY APPS
 ]
