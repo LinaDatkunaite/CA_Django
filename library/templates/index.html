@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Region library</h1>
+  <p>Hello to our virtual library</p>
+  <p>Statistics:</p>
+  <ul>
+    <li><strong>Total book count:</strong> {{ num_books }}</li>
+    <li><strong>Steve Jobs book count:</strong> {{ num_books1 }}</li>
+    <li><strong>number of exemplaries:</strong> {{ num_instances }}</li>
+    <li><strong>Free exemplaries:</strong> {{ num_instances_available }}</li>
+    <li><strong>Authors count:</strong> {{ num_authors }}</li>
+  </ul>
+{% endblock %}
