@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Romeo books list:</h1>
+  {% if my_book_list %}
+  <ul>
+    {% for book in my_book_list %}
+      <li>
+        <a href="{{ book.id }}">{{ book.title }}</a> ({{book.author}})
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>We do not have any books</p>
+  {% endif %}
+{% endblock %}
