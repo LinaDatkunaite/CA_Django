@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, reverse
 # from django.http import HttpResponse
 from .models import Book, Author, Bookinstance, Genre
 from django.views import generic
@@ -10,8 +10,9 @@ from django.shortcuts import redirect
 from django.contrib.auth.forms import User
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
-
-
+from .forms import BookReviewForm
+# Importuojame FormMixin, kurį naudosime BookDetailView klasėje
+from django.views.generic.edit import FormMixin
 
 def index(request):
     num_books = Book.objects.all().count()
@@ -59,6 +60,7 @@ class BookListView(generic.ListView):
     paginate_by = 3
     template_name = 'book_list.html'
 
+
 class RomeoBookListView(generic.ListView):
     model = Book
     context_object_name = 'my_book_list'
@@ -66,9 +68,34 @@ class RomeoBookListView(generic.ListView):
     template_name = 'romeo_list.html'
 
 
-class BookDetailView(generic.DetailView):
+
+
+
+
+class BookDetailView(FormMixin, generic.DetailView):
     model = Book
     template_name = 'book_detail.html'
+    form_class = BookReviewForm
+
+    # nurodome, kur atsidursime komentaro sėkmės atveju.
+    def get_success_url(self):
+        return reverse('book-detail', kwargs={'pk': self.object.book_id})
+
+    # standartinis post metodo perrašymas, naudojant FormMixin, galite kopijuoti tiesiai į savo projektą.
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    # štai čia nurodome, kad knyga bus būtent ta, po kuria komentuojame, o vartotojas bus tas, kuris yra prisijungęs.
+    def form_valid(self, form):
+        form.instance.book = self.object
+        form.instance.reviewer = self.request.user
+        form.save()
+        return super(BookDetailView, self).form_valid(form)
 
 
 
@@ -141,3 +168,5 @@ def register(request):
         return redirect('login')
 
     return render(request, 'registration/register.html')
+
+
