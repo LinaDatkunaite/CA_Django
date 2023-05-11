@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
@@ -9,4 +9,8 @@ urlpatterns = [
     path('book/', views.RomeoBookListView.as_view(), name='book'),
     path('books/<int:pk>', views.BookDetailView.as_view(), name='book-detail'),
     path('search/', views.search, name='search'),
+    path('account/', include('django.contrib.auth.urls')),
+    path('mybooks/', views.UserBooksListView.as_view(), name='my-borrowed'),
+    path('mybooks2/', views.user_books, name='mybooks2'),
+    path('register/', views.register, name='register')
 ]

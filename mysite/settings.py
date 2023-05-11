@@ -33,15 +33,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'library',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tinymce',
 
     # MY APSS - butina prideti
-    'library',
+
     # THIRD PARTY APPS
 ]
 
@@ -135,3 +137,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'library/static/media')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/account/login'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_POST = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config("EMAIL_ADRESS")
+# el. pašto adresas iš kurio siųsite
+EMAIL_HOST_PASSWORD = config("EMAIL_PASS")
+# slaptažodis

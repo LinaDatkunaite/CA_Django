@@ -29,4 +29,17 @@
       <p class="text-muted"><strong>Id:</strong> {{ copy.instance_id }}</p>
     {% endfor %}
   </div>
+
+</br>
+  <h4>Atsiliepimai:</h4>
+  {% if book.review.all %}
+    {% for review in book.review.all %}
+      <hr>
+      <strong>{{ review.reviewer }}</strong>, <em>{{ review.date_created}}</em>
+      <p>{{ review.content }}</p>
+    {% endfor %}
+  {% else %}
+    <p>Knyga neturi atsiliepimų</p>
+  {% endif %}
+
 {% endblock %}
